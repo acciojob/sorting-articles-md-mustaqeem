@@ -1,4 +1,3 @@
-//your JS code here. If required.
 const bands = [
   'The Plot in You',
   'The Devil Wears Prada',
@@ -15,21 +14,26 @@ const bands = [
   'An Old Dog'
 ];
 
-// remove a, an, the from start
+// remove a, an, the ONLY from beginning
 function strip(name) {
-  return name.replace(/^(a |an |the )/i, '').trim();
+  return name.replace(/^(the|a|an)\s/i, '');
 }
 
-// sort ignoring articles
+// sort properly
 bands.sort((a, b) => {
-  return strip(a).localeCompare(strip(b));
+  const bandA = strip(a).toLowerCase();
+  const bandB = strip(b).toLowerCase();
+
+  if (bandA > bandB) return 1;
+  if (bandA < bandB) return -1;
+  return 0;
 });
 
-// add to UI
+// render list
 const ul = document.getElementById("band");
 
 bands.forEach(band => {
   const li = document.createElement("li");
-  li.textContent = band;
+  li.innerText = band;
   ul.appendChild(li);
 });
