@@ -14,26 +14,26 @@ const bands = [
   'An Old Dog'
 ];
 
-// remove "a", "an", "the" from start
+// better strip function
 function strip(str) {
-  return str.replace(/^(a |an |the )/i, '');
+  return str.replace(/^(the|a|an)\s+/i, '');
 }
 
-// sort bands
+// sort
 bands.sort(function(a, b) {
-  let bandA = strip(a).toLowerCase();
-  let bandB = strip(b).toLowerCase();
+  const bandA = strip(a).toLowerCase();
+  const bandB = strip(b).toLowerCase();
 
-  if (bandA > bandB) return 1;
   if (bandA < bandB) return -1;
+  if (bandA > bandB) return 1;
   return 0;
 });
 
-// add to UI
+// render
 const ul = document.getElementById("band");
 
-for (let i = 0; i < bands.length; i++) {
+bands.forEach(function(band) {
   const li = document.createElement("li");
-  li.textContent = bands[i];
+  li.textContent = band;
   ul.appendChild(li);
-}
+});
