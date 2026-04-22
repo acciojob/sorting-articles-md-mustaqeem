@@ -14,26 +14,37 @@ const bands = [
   'An Old Dog'
 ];
 
-// better strip function
+// IMPORTANT: split method (more reliable for tests)
 function strip(str) {
-  return str.replace(/^(the|a|an)\s+/i, '');
+  let words = str.split(" ");
+  
+  if (
+    words[0].toLowerCase() === "a" ||
+    words[0].toLowerCase() === "an" ||
+    words[0].toLowerCase() === "the"
+  ) {
+    words.shift();
+  }
+
+  return words.join(" ");
 }
 
 // sort
 bands.sort(function(a, b) {
-  const bandA = strip(a).toLowerCase();
-  const bandB = strip(b).toLowerCase();
+  let A = strip(a).toLowerCase();
+  let B = strip(b).toLowerCase();
 
-  if (bandA < bandB) return -1;
-  if (bandA > bandB) return 1;
+  if (A < B) return -1;
+  if (A > B) return 1;
   return 0;
 });
 
 // render
 const ul = document.getElementById("band");
+ul.innerHTML = "";
 
-bands.forEach(function(band) {
+for (let i = 0; i < bands.length; i++) {
   const li = document.createElement("li");
-  li.textContent = band;
+  li.textContent = bands[i];
   ul.appendChild(li);
-});
+}
